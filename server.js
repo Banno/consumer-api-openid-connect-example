@@ -72,6 +72,7 @@ app.get('/auth', (req, res, next) => {
       const options = {};
       // If we have a deep link path query parameter, save it in a state parameter
       // so that we can redirect to the correct page when the OAuth flow completes
+      // See https://auth0.com/docs/protocols/oauth2/redirect-users
       if (req.query.returnPath && req.query.returnPath[0] === '/') {
         // Random string for state
         options.state =  Math.random().toString(36).substring(2, 15) +
