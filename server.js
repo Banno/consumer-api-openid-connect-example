@@ -31,7 +31,7 @@ console.log("Environment: " + env)
 const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
 const client = new issuer.Client(config.client[`silverlake-${env}`]);
 
-client.CLOCK_TOLERANCE = 5000; // to allow a 5 minute clock skew for verification
+client.CLOCK_TOLERANCE = 300; // to allow a 5 minute clock skew for verification
 
 // Configure the Passport strategy for OpenID Connect.
 const passportStrategy = new Strategy({
