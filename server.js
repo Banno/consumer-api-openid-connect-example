@@ -69,19 +69,17 @@ app.get('/', (req, res, next) => {
 // This routing path handles the start of an authentication request.
 // This is the path used in '/login.html' when you click the 'Sign in with Banno' button.
 app.get('/auth', (req, res, next) => {
-      const options = {};
+      const options = {
+        // Random string for state
+        state: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      };
+      req.session.oAuthState = req.session.oAuthState || {};
+      req.session.oAuthState[options.state] = {};
       // If we have a deep link path query parameter, save it in a state parameter
       // so that we can redirect to the correct page when the OAuth flow completes
       // See https://auth0.com/docs/protocols/oauth2/redirect-users
       if (req.query.returnPath && req.query.returnPath[0] === '/') {
-        // Random string for state
-        options.state =  Math.random().toString(36).substring(2, 15) +
-            Math.random().toString(36).substring(2, 15);
-
-        req.session.oAuthState = req.session.oAuthState || {};
-        req.session.oAuthState[options.state] = {
-          returnPath: req.query.returnPath
-        };
+        req.session.oAuthState[options.state].returnPath = req.query.returnPath;
       }
       return passport.authenticate('openidconnect', options)(req, res, next);
     }
