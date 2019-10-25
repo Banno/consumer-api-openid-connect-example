@@ -31,6 +31,8 @@ console.log("Environment: " + env)
 const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
 const client = new issuer.Client(config.client[`silverlake-${env}`]);
 
+client.CLOCK_TOLERANCE = 300; // to allow a 5 minute clock skew for verification
+
 // Configure the Passport strategy for OpenID Connect.
 const passportStrategy = new Strategy({
   client: client,
@@ -60,21 +62,79 @@ passport.use('openidconnect', passportStrategy);
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
+app.get('/', (req, res, next) => {
+  res.redirect('/hello');
+});
+
 // This routing path handles the start of an authentication request.
 // This is the path used in '/login.html' when you click the 'Sign in with Banno' button.
-app.get('/auth', passport.authenticate('openidconnect'));
+app.get('/auth', (req, res, next) => {
+  const options = {
+    // Random string for state
+    state: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  };
+  req.session.oAuthState = req.session.oAuthState || {};
+  req.session.oAuthState[options.state] = {};
+  // If we have a deep link path query parameter, save it in a state parameter
+  // so that we can redirect to the correct page when the OAuth flow completes
+  // See https://auth0.com/docs/protocols/oauth2/redirect-users
+  if (req.query.returnPath && req.query.returnPath[0] === '/') {
+    req.session.oAuthState[options.state].returnPath = req.query.returnPath;
+  }
+  return passport.authenticate('openidconnect', options)(req, res, next);
+}
+);
 
 // This routing path handles the authentication callback.
 // This path (including the host information) must be configured in Banno SSO settings.
-app.get('/auth/cb', passport.authenticate('openidconnect', { successRedirect: '/me', failureRedirect: '/login' }));
+app.get('/auth/cb', (req, res, next) =>
+  passport.authenticate('openidconnect', (err, user, info) => {
+    console.log(err, user, info);
+    if (err || !user) {
+      return res.redirect('/login.html');
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      let nextPath = '/me';
+      // If a state parameter is present and has a matching local state, lookup the value
+      if (req.query.state) {
+        if (req.session.oAuthState && req.session.oAuthState[req.query.state]) {
+          if (req.session.oAuthState[req.query.state].returnPath) {
+            nextPath = req.session.oAuthState[req.query.state].returnPath;
+          }
+
+          delete req.session.oAuthState[req.query.state];
+        } else {
+          console.error('State parameter not found in store');
+          return res.redirect('/login.html');
+        }
+      }
+      return res.redirect(nextPath);
+    });
+  })(req, res, next)
+);
 
 // This routing path shows the OpenID Connect claims for the authenticated user.
 // This path is where you'll be redirected once you sign in.
 app.get('/me', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login.html?returnPath=/me');
+    return;
+  }
   res.set('Content-Type', 'application/json').send(JSON.stringify(req.session.passport.user, undefined, 2));
 });
 
-app.use(express.static('public'))
+app.get('/hello', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login.html?returnPath=/hello');
+    return;
+  }
+  res.set('Content-Type', 'text/plain').send(`Hello ${req.session.passport.user.name}`);
+});
+
+app.use(express.static('public'));
 
 if (env === 'local') {
   // Running the server locally requires a cert due to HTTPS requirement for the authentication callback.
