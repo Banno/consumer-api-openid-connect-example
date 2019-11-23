@@ -18,7 +18,7 @@ You'll need these credentials:
 It is important to keep the `client_secret` value secret and not leak it through some kind of frontend, client-accessible JavaScript call.
 ```
 
-# Install
+# Installation
 
 ## 1) Install software prerequisites
 
@@ -101,3 +101,20 @@ Both the `access_token` and `id_token` are in [JSON Web Token format](https://en
 ```
 JWTs are credentials which can grant access to resources. It is important to keep them secret.
 ```
+
+# Deeplinking
+
+This project has an example of how to handle deeplinking to a specific page where access is protected behind OpenID Connect authentication. The technique is adapted from https://auth0.com/docs/protocols/oauth2/redirect-users.
+
+The example of how to handle deeplinking is shown in the `'/hello'` route within `server.js`.
+
+If a user visits https://localhost:8080/hello and _is already authenticated_, then they will be shown a page which displays their name (e.g. Riley Doe).
+```
+Hello Riley Doe
+```
+
+If a user visits https://localhost:8080/hello but _is not yet authenticated_, then they will be redirected to login at https://localhost:8080/login.html?returnPath=/hello.
+
+A `state` is calculated and associated with the `returnPath` (in this case, `/hello`).
+
+Once the user is authenticated, the `state` parameter is compared to the local `state` and if it matches then the user is redirected to the associated `returnPath` (in this case, `/hello`).
