@@ -18,6 +18,7 @@
 
 const fs = require('fs')
 const https = require('https')
+const fetch = require('node-fetch')
 const { Strategy, Issuer } = require('openid-client')
 const passport = require('passport')
 const express = require('express')
@@ -133,6 +134,98 @@ app.get('/hello', (req, res) => {
   }
   res.set('Content-Type', 'text/plain').send(`Hello ${req.session.passport.user.name}`);
 });
+
+app.get('/allthedata', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login.html?returnPath=/allthedata');
+    return;
+  }
+
+  console.log('<=========================================================================================>');
+
+  doStuff3(req.session.passport.user.sub);
+  
+  res.set('Content-Type', 'text/plain').send(`allthedata ${req.session.passport.user.name}`);
+});
+
+
+async function doStuff3(userId) {
+  // Set up
+  const bearer = ''
+  const consumerApiEnvironment = 'https://silverlake.banno-production.com'
+  const consumerApiUsersBase = '/a/consumer/api/users/'
+  
+  // PUT Fetch
+  const fetchApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/fetch', {
+    method: 'put',
+    headers: { 'Authorization': 'Bearer ' + bearer }
+  });
+  
+  const fetchApiJson = await fetchApiResponse.json();
+  const taskId = fetchApiJson.taskId;
+
+  console.log('Task ID: ' + taskId);
+  sleep(2000);
+
+  // GET Tasks
+  const tasksApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/tasks/' + taskId, {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearer }
+  });
+
+  const tasksApiJson = await tasksApiResponse.json();
+
+  const events = tasksApiJson.events;
+
+  events.forEach(event => {
+    const eventType = event.type;
+
+    console.log(eventType);
+  });
+
+  // GET Accounts
+  const accountsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/accounts', {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearer }
+  });
+
+  const accountsApiJson = await accountsApiResponse.json();
+
+  const accounts = accountsApiJson.accounts;
+
+  accounts.forEach(account => {
+    const accountId = account.id;
+    const accountBalance = account.balance;
+
+    console.log('Account -> ID: ' + accountId + ' , Balance: ' + accountBalance);
+  });
+
+  // GET Transactions
+  const transactionsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/transactions', {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearer }
+  });
+
+  const transactionsApiJson = await transactionsApiResponse.json();
+
+  const transactions = transactionsApiJson.transactions;
+
+  transactions.forEach(transaction => {
+    const transactionId = transaction.id;
+    const transactionAmount = transaction.amount;
+    const transactionMemo = transaction.memo;
+
+    console.log('Transaction -> ID: ' + transactionId + ' , Amount: ' + transactionAmount + ' , Memo: ' + transactionMemo);
+  });
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
 
 app.use(express.static('public'));
 
