@@ -151,14 +151,14 @@ app.get('/allthedata', (req, res) => {
 
 async function getAccountsAndTransactions(userId) {
   // Set up
-  const bearer = ''
+  const bearerToken = ''
   const consumerApiEnvironment = 'https://silverlake.banno-production.com'
   const consumerApiUsersBase = '/a/consumer/api/users/'
   
   // PUT Fetch
   const fetchApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/fetch', {
     method: 'put',
-    headers: { 'Authorization': 'Bearer ' + bearer }
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
   });
   
   const fetchApiJson = await fetchApiResponse.json();
@@ -170,7 +170,7 @@ async function getAccountsAndTransactions(userId) {
   // GET Tasks
   const tasksApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/tasks/' + taskId, {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearer }
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
   });
 
   const tasksApiJson = await tasksApiResponse.json();
@@ -186,7 +186,7 @@ async function getAccountsAndTransactions(userId) {
   // GET Accounts
   const accountsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/accounts', {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearer }
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
   });
 
   const accountsApiJson = await accountsApiResponse.json();
@@ -203,7 +203,7 @@ async function getAccountsAndTransactions(userId) {
   // GET Transactions
   const transactionsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/transactions', {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearer }
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
   });
 
   const transactionsApiJson = await transactionsApiResponse.json();
