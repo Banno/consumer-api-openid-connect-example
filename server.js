@@ -143,13 +143,13 @@ app.get('/allthedata', (req, res) => {
 
   console.log('<=========================================================================================>');
 
-  doStuff3(req.session.passport.user.sub);
+  getAccountsAndTransactions(req.session.passport.user.sub);
   
   res.set('Content-Type', 'text/plain').send(`allthedata ${req.session.passport.user.name}`);
 });
 
 
-async function doStuff3(userId) {
+async function getAccountsAndTransactions(userId) {
   // Set up
   const bearer = ''
   const consumerApiEnvironment = 'https://silverlake.banno-production.com'
