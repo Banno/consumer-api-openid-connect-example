@@ -143,19 +143,19 @@ app.get('/allthedata', (req, res) => {
 
   console.log('<=========================================================================================>');
 
-  getAccountsAndTransactions(req.session.passport.user.sub);
-  
-  res.set('Content-Type', 'text/plain').send(`allthedata ${req.session.passport.user.name}`);
+  getAccountsAndTransactions(req.session.passport.user.sub, res);
 });
 
 
-async function getAccountsAndTransactions(userId) {
+async function getAccountsAndTransactions(userId, res) {
   // Set up
   const bearerToken = ''
   const consumerApiEnvironment = 'https://silverlake.banno-production.com'
   const consumerApiUsersBase = '/a/consumer/api/users/'
   const consumerApiPath = consumerApiEnvironment + consumerApiUsersBase;
   
+  let output = '';
+
   // PUT Fetch
   const taskId = await putFetch(consumerApiPath, userId, bearerToken);
 
@@ -179,6 +179,9 @@ async function getAccountsAndTransactions(userId) {
     const accountBalance = account.balance;
 
     console.log('Account -> ID: ' + accountId + ' , Balance: ' + accountBalance);
+
+    output += 'Account ID: ' + accountId + '\n';
+    output += '  ' + 'Balance: ' + accountBalance + '\n\n';
   });
 
   // GET Transactions
@@ -186,11 +189,19 @@ async function getAccountsAndTransactions(userId) {
 
   transactions.forEach(transaction => {
     const transactionId = transaction.id;
+    const transactionAccountId = transaction.accountId;
     const transactionAmount = transaction.amount;
     const transactionMemo = transaction.memo;
 
     console.log('Transaction -> ID: ' + transactionId + ' , Amount: ' + transactionAmount + ' , Memo: ' + transactionMemo);
+
+    output += 'Transaction ID: ' + transactionId + '\n';
+    output += '  ' + 'Account ID: ' + transactionAccountId + '\n';
+    output += '  ' + 'Amount: ' + transactionAmount + '\n';
+    output += '  ' + 'Memo: ' + transactionMemo + '\n\n';
   });
+
+  res.set('Content-Type', 'text/plain').send(output);
 }
 
 async function getTransactions(consumerApiPath, userId, bearerToken) {
