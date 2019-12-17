@@ -154,28 +154,16 @@ async function getAccountsAndTransactions(userId) {
   const bearerToken = ''
   const consumerApiEnvironment = 'https://silverlake.banno-production.com'
   const consumerApiUsersBase = '/a/consumer/api/users/'
+  const consumerApiPath = consumerApiEnvironment + consumerApiUsersBase;
   
   // PUT Fetch
-  const fetchApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/fetch', {
-    method: 'put',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
-  });
-  
-  const fetchApiJson = await fetchApiResponse.json();
-  const taskId = fetchApiJson.taskId;
+  const taskId = await putFetch(consumerApiPath, userId, bearerToken);
 
   console.log('Task ID: ' + taskId);
   sleep(2000);
 
   // GET Tasks
-  const tasksApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/tasks/' + taskId, {
-    method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
-  });
-
-  const tasksApiJson = await tasksApiResponse.json();
-
-  const events = tasksApiJson.events;
+  const events = await getTasks(consumerApiPath, userId, taskId, bearerToken);
 
   events.forEach(event => {
     const eventType = event.type;
@@ -184,14 +172,7 @@ async function getAccountsAndTransactions(userId) {
   });
 
   // GET Accounts
-  const accountsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/accounts', {
-    method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
-  });
-
-  const accountsApiJson = await accountsApiResponse.json();
-
-  const accounts = accountsApiJson.accounts;
+  const accounts = await getAccounts(consumerApiPath, userId, bearerToken);
 
   accounts.forEach(account => {
     const accountId = account.id;
@@ -201,14 +182,7 @@ async function getAccountsAndTransactions(userId) {
   });
 
   // GET Transactions
-  const transactionsApiResponse = await fetch(consumerApiEnvironment + consumerApiUsersBase + userId + '/transactions', {
-    method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
-  });
-
-  const transactionsApiJson = await transactionsApiResponse.json();
-
-  const transactions = transactionsApiJson.transactions;
+  const transactions = await getTransactions(consumerApiPath, userId, bearerToken);
 
   transactions.forEach(transaction => {
     const transactionId = transaction.id;
@@ -217,6 +191,46 @@ async function getAccountsAndTransactions(userId) {
 
     console.log('Transaction -> ID: ' + transactionId + ' , Amount: ' + transactionAmount + ' , Memo: ' + transactionMemo);
   });
+}
+
+async function getTransactions(consumerApiPath, userId, bearerToken) {
+  const transactionsApiResponse = await fetch(consumerApiPath + userId + '/transactions', {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
+  });
+  const transactionsApiJson = await transactionsApiResponse.json();
+  const transactions = transactionsApiJson.transactions;
+  return transactions;
+}
+
+async function getAccounts(consumerApiPath, userId, bearerToken) {
+  const accountsApiResponse = await fetch(consumerApiPath + userId + '/accounts', {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
+  });
+  const accountsApiJson = await accountsApiResponse.json();
+  const accounts = accountsApiJson.accounts;
+  return accounts;
+}
+
+async function getTasks(consumerApiPath, userId, taskId, bearerToken) {
+  const tasksApiResponse = await fetch(consumerApiPath + userId + '/tasks/' + taskId, {
+    method: 'get',
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
+  });
+  const tasksApiJson = await tasksApiResponse.json();
+  const events = tasksApiJson.events;
+  return events;
+}
+
+async function putFetch(consumerApiPath, userId, bearerToken) {
+  const fetchApiResponse = await fetch(consumerApiPath + userId + '/fetch', {
+    method: 'put',
+    headers: { 'Authorization': 'Bearer ' + bearerToken }
+  });
+  const fetchApiJson = await fetchApiResponse.json();
+  const taskId = fetchApiJson.taskId;
+  return taskId;
 }
 
 function sleep(milliseconds) {
