@@ -160,16 +160,9 @@ async function getAccountsAndTransactions(userId, res) {
   const taskId = await putFetch(consumerApiPath, userId, bearerToken);
 
   console.log('Task ID: ' + taskId);
-  sleep(2000);
 
   // GET Tasks
-  const events = await getTasks(consumerApiPath, userId, taskId, bearerToken);
-
-  events.forEach(event => {
-    const eventType = event.type;
-
-    console.log(eventType);
-  });
+  await getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, bearerToken);
 
   // GET Accounts
   const accounts = await getAccounts(consumerApiPath, userId, bearerToken);
@@ -202,6 +195,25 @@ async function getAccountsAndTransactions(userId, res) {
   });
 
   res.set('Content-Type', 'text/plain').send(output);
+}
+
+async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, bearerToken) {
+  
+  let taskEndedEventReceived = false;
+  
+  while (taskEndedEventReceived != true) {
+    const events = await getTasks(consumerApiPath, userId, taskId, bearerToken);
+
+    events.forEach(event => {
+      const eventType = event.type;
+      
+      console.log(eventType);
+
+      if (eventType == 'TaskEnded') {
+        taskEndedEventReceived = true;
+      }
+    });
+  }
 }
 
 async function getTransactions(consumerApiPath, userId, bearerToken) {
@@ -242,14 +254,6 @@ async function putFetch(consumerApiPath, userId, bearerToken) {
   const fetchApiJson = await fetchApiResponse.json();
   const taskId = fetchApiJson.taskId;
   return taskId;
-}
-
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
 }
 
 app.use(express.static('public'));
