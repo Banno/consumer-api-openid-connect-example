@@ -135,9 +135,9 @@ app.get('/hello', (req, res) => {
   res.set('Content-Type', 'text/plain').send(`Hello ${req.session.passport.user.name}`);
 });
 
-app.get('/allthedata', (req, res) => {
+app.get('/accountsAndTransactions', (req, res) => {
   if (!req.isAuthenticated()) {
-    res.redirect('/login.html?returnPath=/allthedata');
+    res.redirect('/login.html?returnPath=/accountsAndTransactions');
     return;
   }
 
