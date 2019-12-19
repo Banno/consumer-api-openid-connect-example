@@ -118,3 +118,19 @@ If a user visits https://localhost:8080/hello but _is not yet authenticated_, th
 A `state` is calculated and associated with the `returnPath` (in this case, `/hello`).
 
 Once the user is authenticated, the `state` parameter is compared to the local `state` and if it matches then the user is redirected to the associated `returnPath` (in this case, `/hello`).
+
+# Retrieving Accounts and Transactions
+
+An example of how to retrieve Accounts and Transactions for a user is shown in the `'/accountsAndTransactions'` route within `server.js`.
+
+If a user visits https://localhost:8080/accountsAndTransactions and authenticates, the server will retrieve the Accounts and Transactions for the user and 'pretty print' the data to the page.
+
+## Retrieval Process
+
+1. The server makes an API call to `PUT /a/consumer/api/users/{userId}/fetch`. The response contains an object with a `taskId` property.
+
+2. The server then makes API calls to `GET /a/consumer/api/users/{userId}/tasks/{taskId}` and polls until an event type of `TaskEnded` is found. _(The amount of time this takes is variable based on the number of accounts a user has as well as the hardware the Financial Institution uses for its Core System.)_
+
+3. After polling is completed, the server makes API calls to `GET /a/consumer/api/users/{userId}/accounts` and `GET /a/consumer/api/users/{userId}/transactions`.
+
+4. Finally, the collected data is 'pretty printed' to the page returned to the user.
