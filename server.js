@@ -168,9 +168,7 @@ if (env === 'local') {
 
 async function getAccountsAndTransactions(userId, res) {
   // Set up
-  const consumerApiEnvironment = 'https://silverlake.banno-production.com'
-  const consumerApiUsersBase = '/a/consumer/api/users/'
-  const consumerApiPath = consumerApiEnvironment + consumerApiUsersBase;
+  const consumerApiPath = config.consumerApi.environment + config.consumerApi.usersBase;
   
   let output = '';
 
