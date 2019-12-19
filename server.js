@@ -141,6 +141,7 @@ app.get('/hello', (req, res) => {
   res.set('Content-Type', 'text/plain').send(`Hello ${req.session.passport.user.name}`);
 });
 
+// This routing path shows the Accounts and Transactions for the authenticated user.
 app.get('/accountsAndTransactions', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/login.html?returnPath=/accountsAndTransactions');
