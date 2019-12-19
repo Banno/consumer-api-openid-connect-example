@@ -152,6 +152,18 @@ app.get('/accountsAndTransactions', (req, res) => {
   getAccountsAndTransactions(userId, res);
 });
 
+app.use(express.static('public'));
+
+if (env === 'local') {
+  // Running the server locally requires a cert due to HTTPS requirement for the authentication callback.
+  const server = https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app)
+  server.listen(port, () => console.log(`Server listening on https://localhost:${port}...`))
+} else {
+  app.listen(port, () => console.log(`Server listening on http://localhost:${port}...`))
+}
 
 async function getAccountsAndTransactions(userId, res) {
   // Set up
@@ -251,17 +263,4 @@ async function putFetch(consumerApiPath, userId, accessToken) {
   const fetchApiJson = await fetchApiResponse.json();
   const taskId = fetchApiJson.taskId;
   return taskId;
-}
-
-app.use(express.static('public'));
-
-if (env === 'local') {
-  // Running the server locally requires a cert due to HTTPS requirement for the authentication callback.
-  const server = https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-  }, app)
-  server.listen(port, () => console.log(`Server listening on https://localhost:${port}...`))
-} else {
-  app.listen(port, () => console.log(`Server listening on http://localhost:${port}...`))
 }
