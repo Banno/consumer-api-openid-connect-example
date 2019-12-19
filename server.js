@@ -147,8 +147,6 @@ app.get('/accountsAndTransactions', (req, res) => {
     return;
   }
 
-  console.log('<=========================================================================================>');
-
   const userId = req.session.passport.user.sub;
 
   getAccountsAndTransactions(userId, res);
@@ -166,8 +164,6 @@ async function getAccountsAndTransactions(userId, res) {
   // PUT Fetch
   const taskId = await putFetch(consumerApiPath, userId, accessToken);
 
-  console.log('Task ID: ' + taskId);
-
   // GET Tasks
   await getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, accessToken);
 
@@ -177,8 +173,6 @@ async function getAccountsAndTransactions(userId, res) {
   accounts.forEach(account => {
     const accountId = account.id;
     const accountBalance = account.balance;
-
-    console.log('Account -> ID: ' + accountId + ' , Balance: ' + accountBalance);
 
     output += 'Account ID: ' + accountId + '\n';
     output += '  ' + 'Balance: ' + accountBalance + '\n\n';
@@ -192,8 +186,6 @@ async function getAccountsAndTransactions(userId, res) {
     const transactionAccountId = transaction.accountId;
     const transactionAmount = transaction.amount;
     const transactionMemo = transaction.memo;
-
-    console.log('Transaction -> ID: ' + transactionId + ' , Amount: ' + transactionAmount + ' , Memo: ' + transactionMemo);
 
     output += 'Transaction ID: ' + transactionId + '\n';
     output += '  ' + 'Account ID: ' + transactionAccountId + '\n';
@@ -214,8 +206,6 @@ async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, ta
     events.forEach(event => {
       const eventType = event.type;
       
-      console.log(eventType);
-
       if (eventType == 'TaskEnded') {
         taskEndedEventReceived = true;
       }
