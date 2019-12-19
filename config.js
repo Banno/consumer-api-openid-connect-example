@@ -16,5 +16,9 @@ module.exports = {
       token_endpoint_auth_method: 'client_secret_basic',
       redirect_uris: ['https://localhost:8080/auth/cb']
     }
+  },
+  consumerApi: {
+    environment: 'https://silverlake.banno-production.com',
+    usersBase: '/a/consumer/api/users/'
   }
 }
