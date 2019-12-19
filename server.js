@@ -149,7 +149,9 @@ app.get('/accountsAndTransactions', (req, res) => {
 
   console.log('<=========================================================================================>');
 
-  getAccountsAndTransactions(req.session.passport.user.sub, res);
+  const userId = req.session.passport.user.sub;
+
+  getAccountsAndTransactions(userId, res);
 });
 
 
