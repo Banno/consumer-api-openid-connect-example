@@ -155,7 +155,6 @@ app.get('/accountsAndTransactions', (req, res) => {
 
 async function getAccountsAndTransactions(userId, res) {
   // Set up
-  const bearerToken = accessToken;
   const consumerApiEnvironment = 'https://silverlake.banno-production.com'
   const consumerApiUsersBase = '/a/consumer/api/users/'
   const consumerApiPath = consumerApiEnvironment + consumerApiUsersBase;
@@ -163,15 +162,15 @@ async function getAccountsAndTransactions(userId, res) {
   let output = '';
 
   // PUT Fetch
-  const taskId = await putFetch(consumerApiPath, userId, bearerToken);
+  const taskId = await putFetch(consumerApiPath, userId, accessToken);
 
   console.log('Task ID: ' + taskId);
 
   // GET Tasks
-  await getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, bearerToken);
+  await getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, accessToken);
 
   // GET Accounts
-  const accounts = await getAccounts(consumerApiPath, userId, bearerToken);
+  const accounts = await getAccounts(consumerApiPath, userId, accessToken);
 
   accounts.forEach(account => {
     const accountId = account.id;
@@ -184,7 +183,7 @@ async function getAccountsAndTransactions(userId, res) {
   });
 
   // GET Transactions
-  const transactions = await getTransactions(consumerApiPath, userId, bearerToken);
+  const transactions = await getTransactions(consumerApiPath, userId, accessToken);
 
   transactions.forEach(transaction => {
     const transactionId = transaction.id;
@@ -203,12 +202,12 @@ async function getAccountsAndTransactions(userId, res) {
   res.set('Content-Type', 'text/plain').send(output);
 }
 
-async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, bearerToken) {
+async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, accessToken) {
   
   let taskEndedEventReceived = false;
   
   while (taskEndedEventReceived != true) {
-    const events = await getTasks(consumerApiPath, userId, taskId, bearerToken);
+    const events = await getTasks(consumerApiPath, userId, taskId, accessToken);
 
     events.forEach(event => {
       const eventType = event.type;
@@ -222,40 +221,40 @@ async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, ta
   }
 }
 
-async function getTransactions(consumerApiPath, userId, bearerToken) {
+async function getTransactions(consumerApiPath, userId, accessToken) {
   const transactionsApiResponse = await fetch(consumerApiPath + userId + '/transactions', {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
+    headers: { 'Authorization': 'Bearer ' + accessToken }
   });
   const transactionsApiJson = await transactionsApiResponse.json();
   const transactions = transactionsApiJson.transactions;
   return transactions;
 }
 
-async function getAccounts(consumerApiPath, userId, bearerToken) {
+async function getAccounts(consumerApiPath, userId, accessToken) {
   const accountsApiResponse = await fetch(consumerApiPath + userId + '/accounts', {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
+    headers: { 'Authorization': 'Bearer ' + accessToken }
   });
   const accountsApiJson = await accountsApiResponse.json();
   const accounts = accountsApiJson.accounts;
   return accounts;
 }
 
-async function getTasks(consumerApiPath, userId, taskId, bearerToken) {
+async function getTasks(consumerApiPath, userId, taskId, accessToken) {
   const tasksApiResponse = await fetch(consumerApiPath + userId + '/tasks/' + taskId, {
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
+    headers: { 'Authorization': 'Bearer ' + accessToken }
   });
   const tasksApiJson = await tasksApiResponse.json();
   const events = tasksApiJson.events;
   return events;
 }
 
-async function putFetch(consumerApiPath, userId, bearerToken) {
+async function putFetch(consumerApiPath, userId, accessToken) {
   const fetchApiResponse = await fetch(consumerApiPath + userId + '/fetch', {
     method: 'put',
-    headers: { 'Authorization': 'Bearer ' + bearerToken }
+    headers: { 'Authorization': 'Bearer ' + accessToken }
   });
   const fetchApiJson = await fetchApiResponse.json();
   const taskId = fetchApiJson.taskId;
