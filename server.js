@@ -26,7 +26,7 @@ const session = require('express-session')
 const config = require('./config')
 
 const env = process.env.ENVIRONMENT
-console.log("Environment: " + env)
+console.log(`Environment: ${env}`)
 
 // Configure the OpenID Connect client based on the issuer.
 const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
@@ -185,8 +185,10 @@ async function getAccountsAndTransactions(userId, res) {
     const accountId = account.id;
     const accountBalance = account.balance;
 
-    output += 'Account ID: ' + accountId + '\n';
-    output += '  ' + 'Balance: ' + accountBalance + '\n\n';
+    output += `
+    Account ID: ${accountId}
+      Balance: ${accountBalance }
+    `;
   });
 
   // GET Transactions
@@ -198,10 +200,12 @@ async function getAccountsAndTransactions(userId, res) {
     const transactionAmount = transaction.amount;
     const transactionMemo = transaction.memo;
 
-    output += 'Transaction ID: ' + transactionId + '\n';
-    output += '  ' + 'Account ID: ' + transactionAccountId + '\n';
-    output += '  ' + 'Amount: ' + transactionAmount + '\n';
-    output += '  ' + 'Memo: ' + transactionMemo + '\n\n';
+    output += `
+    Transaction ID: ${transactionId}
+      Account ID: ${transactionAccountId}
+      Amount: ${transactionAmount}
+      Memo: ${transactionMemo}
+    `;
   });
 
   res.set('Content-Type', 'text/plain').send(output);
