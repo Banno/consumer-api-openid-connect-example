@@ -168,7 +168,7 @@ if (env === 'local') {
 
 async function getAccountsAndTransactions(userId, res) {
   // Set up
-  const consumerApiPath = config.consumerApi.environment + config.consumerApi.usersBase;
+  const consumerApiPath = `${config.consumerApi.environment}${config.consumerApi.usersBase}`;
   
   let output = '';
 
@@ -229,7 +229,7 @@ async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, ta
 }
 
 async function getTransactions(consumerApiPath, userId, accessToken) {
-  const transactionsApiResponse = await fetch(consumerApiPath + userId + '/transactions', {
+  const transactionsApiResponse = await fetch(`${consumerApiPath}${userId}/transactions`, {
     method: 'get',
     headers: { 'Authorization': 'Bearer ' + accessToken }
   });
@@ -239,7 +239,7 @@ async function getTransactions(consumerApiPath, userId, accessToken) {
 }
 
 async function getAccounts(consumerApiPath, userId, accessToken) {
-  const accountsApiResponse = await fetch(consumerApiPath + userId + '/accounts', {
+  const accountsApiResponse = await fetch(`${consumerApiPath}${userId}/accounts`, {
     method: 'get',
     headers: { 'Authorization': 'Bearer ' + accessToken }
   });
@@ -249,7 +249,7 @@ async function getAccounts(consumerApiPath, userId, accessToken) {
 }
 
 async function getTasks(consumerApiPath, userId, taskId, accessToken) {
-  const tasksApiResponse = await fetch(consumerApiPath + userId + '/tasks/' + taskId, {
+  const tasksApiResponse = await fetch(`${consumerApiPath}${userId}/tasks/${taskId}`, {
     method: 'get',
     headers: { 'Authorization': 'Bearer ' + accessToken }
   });
@@ -259,7 +259,7 @@ async function getTasks(consumerApiPath, userId, taskId, accessToken) {
 }
 
 async function putFetch(consumerApiPath, userId, accessToken) {
-  const fetchApiResponse = await fetch(consumerApiPath + userId + '/fetch', {
+  const fetchApiResponse = await fetch(`${consumerApiPath}${userId}/fetch`, {
     method: 'put',
     headers: { 'Authorization': 'Bearer ' + accessToken }
   });
