@@ -34,11 +34,6 @@ const client = new issuer.Client(config.client[`silverlake-${env}`]);
 
 client.CLOCK_TOLERANCE = 300; // to allow a 5 minute clock skew for verification
 
-//
-// TODO: Remove this testing variable!!!!
-//
-let apiCallCount = 0;
-
 // This example project doesn't include any storage mechanism(e.g. a database) for access tokens.
 // Therefore, we use this as our 'storage' for the purposes of this example.
 // This method is NOT recommended for use in production systems.
