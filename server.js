@@ -181,33 +181,33 @@ async function getAccountsAndTransactions(userId, res) {
   // GET Accounts
   const accounts = await getAccounts(consumerApiPath, userId, accessToken);
 
-  accounts.forEach(account => {
+  for (const account of accounts) {
     const accountId = account.id;
     const accountBalance = account.balance;
-
+    
     output += `
     Account ID: ${accountId}
       Balance: ${accountBalance }
     `;
-  });
-
-  // GET Transactions
-  const transactions = await getTransactions(consumerApiPath, userId, accessToken);
-
-  transactions.forEach(transaction => {
-    const transactionId = transaction.id;
-    const transactionAccountId = transaction.accountId;
-    const transactionAmount = transaction.amount;
-    const transactionMemo = transaction.memo;
-
-    output += `
-    Transaction ID: ${transactionId}
-      Account ID: ${transactionAccountId}
-      Amount: ${transactionAmount}
-      Memo: ${transactionMemo}
-    `;
-  });
-
+    
+    // GET Transactions
+    const transactions = await getTransactions(consumerApiPath, userId, accountId, accessToken);
+    
+    transactions.forEach(transaction => {
+      const transactionId = transaction.id;
+      const transactionAccountId = transaction.accountId;
+      const transactionAmount = transaction.amount;
+      const transactionMemo = transaction.memo;
+      
+      output += `
+      Transaction ID: ${transactionId}
+        Account ID: ${transactionAccountId}
+        Amount: ${transactionAmount}
+        Memo: ${transactionMemo}
+      `;
+    });
+  }
+    
   res.set('Content-Type', 'text/plain').send(output);
 }
 
@@ -234,8 +234,8 @@ async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, ta
   }
 }
 
-async function getTransactions(consumerApiPath, userId, accessToken) {
-  const transactionsApiResponse = await fetch(`${consumerApiPath}${userId}/transactions`, {
+async function getTransactions(consumerApiPath, userId, accountId, accessToken) {
+  const transactionsApiResponse = await fetch(`${consumerApiPath}${userId}/accounts/${accountId}/transactions`, {
     method: 'get',
     headers: { 'Authorization': 'Bearer ' + accessToken }
   });
