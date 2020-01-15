@@ -169,7 +169,7 @@ if (env === 'local') {
 async function getAccountsAndTransactions(userId, res) {
   // Set up
   const consumerApiPath = `${config.consumerApi.environment}${config.consumerApi.usersBase}`;
-  
+
   let output = '';
 
   // PUT Fetch
@@ -184,21 +184,21 @@ async function getAccountsAndTransactions(userId, res) {
   for (const account of accounts) {
     const accountId = account.id;
     const accountBalance = account.balance;
-    
+
     output += `
     Account ID: ${accountId}
-      Balance: ${accountBalance }
+      Balance: ${accountBalance}
     `;
-    
+
     // GET Transactions
     const transactions = await getTransactions(consumerApiPath, userId, accountId, accessToken);
-    
+
     transactions.forEach(transaction => {
       const transactionId = transaction.id;
       const transactionAccountId = transaction.accountId;
       const transactionAmount = transaction.amount;
       const transactionMemo = transaction.memo;
-      
+
       output += `
       Transaction ID: ${transactionId}
         Account ID: ${transactionAccountId}
@@ -207,20 +207,20 @@ async function getAccountsAndTransactions(userId, res) {
       `;
     });
   }
-    
+
   res.set('Content-Type', 'text/plain').send(output);
 }
 
 async function getTasksUntilTaskEndedEventIsReceived(consumerApiPath, userId, taskId, accessToken) {
-  
+
   let taskEndedEventReceived = false;
-  
+
   while (taskEndedEventReceived != true) {
     const events = await getTasks(consumerApiPath, userId, taskId, accessToken);
 
     events.forEach(event => {
       const eventType = event.type;
-      
+
       if (eventType == 'TaskEnded') {
         taskEndedEventReceived = true;
       }
