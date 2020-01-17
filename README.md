@@ -131,6 +131,6 @@ If a user visits https://localhost:8080/accountsAndTransactions and authenticate
 
 2. The server then makes API calls to `GET /a/consumer/api/users/{userId}/tasks/{taskId}` and polls until an event type of `TaskEnded` is found. _(The amount of time this takes is variable based on the number of accounts a user has as well as the hardware the Financial Institution uses for its Core System.)_
 
-3. After polling is completed, the server makes API calls to `GET /a/consumer/api/users/{userId}/accounts` and `GET /a/consumer/api/users/{userId}/transactions`.
+3. After polling is completed, the server makes API calls to `GET /a/consumer/api/users/{userId}/accounts` and `GET /a/consumer/api/users/{userId}/accounts/{accountId}/transactions`.
 
 4. Finally, the collected data is 'pretty printed' to the page returned to the user.
