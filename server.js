@@ -44,7 +44,7 @@ const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
-    scope: 'openid profile banno', // These are the OpenID Connect scopes that you'll need.
+    scope: 'openid address email phone profile banno', // These are the OpenID Connect scopes that you'll need.
   },
 }, (tokenSet, done) => {
   console.log(tokenSet)
