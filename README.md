@@ -62,6 +62,14 @@ Once you are signed in, you'll be redirected to https://localhost:8080/me and se
 ```
 {
   "sub": "5cad5c30-6d24-11e9-870c-0242b78f8571",
+  "address": {
+    "locality": "Seattle",
+    "postal_code": "981090000",
+    "region": "WA",
+    "street_address": "400 Broad St"
+  },
+  "email": "rileydoe@jackhenry.dev",
+  "phone_number": "+15552368",
   "birthdate": "1951-03-02",
   "family_name": "Doe",
   "given_name": "Riley",
@@ -85,7 +93,7 @@ TokenSet {
   access_token: '<lengthy-json-web-token-string>',
   expires_at: 1571334444,
   id_token: '<lengthy-json-web-token-string>',
-  scope: 'openid profile banno',
+  scope: 'openid address email phone profile banno',
   token_type: 'Bearer'
 }
 ```
