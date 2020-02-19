@@ -62,6 +62,14 @@ Once you are signed in, you'll be redirected to https://localhost:8080/me and se
 ```
 {
   "sub": "5cad5c30-6d24-11e9-870c-0242b78f8571",
+  "address": {
+    "locality": "Seattle",
+    "postal_code": "981090000",
+    "region": "WA",
+    "street_address": "400 Broad St"
+  },
+  "email": "rileydoe@jackhenry.dev",
+  "phone_number": "+15552368",
   "birthdate": "1951-03-02",
   "family_name": "Doe",
   "given_name": "Riley",
@@ -85,12 +93,12 @@ TokenSet {
   access_token: '<lengthy-json-web-token-string>',
   expires_at: 1571334444,
   id_token: '<lengthy-json-web-token-string>',
-  scope: 'openid profile banno',
+  scope: 'openid address email phone profile banno',
   token_type: 'Bearer'
 }
 ```
 
-The `access_token` contains _authorization information about your application_ regarding which actions it is allowed to perform via the Banno API. These actions map to the scopes (e.g. `openid profile banno`).
+The `access_token` contains _authorization information about your application_ regarding which actions it is allowed to perform via the Banno API. These actions map to the scopes (e.g. `openid address email phone profile banno`).
 
 The `id_token` contains _authentication information about the user_ (i.e. claims).
 
