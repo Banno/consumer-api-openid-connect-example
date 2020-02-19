@@ -98,7 +98,7 @@ TokenSet {
 }
 ```
 
-The `access_token` contains _authorization information about your application_ regarding which actions it is allowed to perform via the Banno API. These actions map to the scopes (e.g. `openid profile banno`).
+The `access_token` contains _authorization information about your application_ regarding which actions it is allowed to perform via the Banno API. These actions map to the scopes (e.g. `openid address email phone profile banno`).
 
 The `id_token` contains _authentication information about the user_ (i.e. claims).
 
