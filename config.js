@@ -19,6 +19,6 @@ module.exports = {
   },
   consumerApi: {
     environment: 'https://silverlake.banno-production.com',
-    usersBase: '/a/consumer/api/users/'
+    usersBase: '/a/consumer/api/v0/users/'
   }
 }
