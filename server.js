@@ -26,11 +26,19 @@ const session = require('express-session')
 const config = require('./config')
 
 const env = process.env.ENVIRONMENT
-console.log(`Environment: ${env}`)
-
+console.log(`Environment: ${env}`);
+(async () => {
 // Configure the OpenID Connect client based on the issuer.
-const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
+// const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
+const issuer = await Issuer.discover('https://silverlake.banno-uat.com/a/consumer/api/oidc/.well-known/openid-configuration');
 const client = new issuer.Client(config.client[`silverlake-${env}`]);
+
+// This is here just to prove that the token exchange used PKCE
+const originalCb = client.authorizationCallback;
+client.authorizationCallback = function(...args) {
+  console.log('client callback', args);
+  return originalCb.apply(this, args);
+};
 
 client.CLOCK_TOLERANCE = 300; // to allow a 5 minute clock skew for verification
 
@@ -46,6 +54,7 @@ const passportStrategy = new Strategy({
     redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
     scope: 'openid address email phone profile banno', // These are the OpenID Connect scopes that you'll need.
   },
+  usePKCE: true
 }, (tokenSet, done) => {
   console.log(tokenSet)
   accessToken = tokenSet.access_token;
@@ -281,3 +290,4 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
+})();
