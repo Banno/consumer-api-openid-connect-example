@@ -9,8 +9,8 @@ module.exports = {
   },
   client: {
     'silverlake-local': {
-      client_id: '42b799f2-e543-4910-b5ec-e69fd458814b', // These credentials are designed for *demonstration* purposes only.
-      client_secret: 'd75b6fb3-91b8-4935-9251-651b294249de', // These credentials are designed for *demonstration* purposes only.
+      client_id: '55fc6a69-a4dd-404c-97f9-e2361b4c44b1', // These credentials are designed for *demonstration* purposes only.
+      client_secret: 'da9003cc-438a-4bbe-95d0-9af6ffe36d6a', // These credentials are designed for *demonstration* purposes only.
       grant_types: ['authorization_code'],
       response_types: ['code'],
       token_endpoint_auth_method: 'client_secret_basic',
