@@ -2,9 +2,9 @@ module.exports = {
   issuer: {
     'silverlake-local': {
       issuer: 'https://www.banno.com/a/consumer/api/oidc',
-      authorization_endpoint: 'https://silverlake.banno-production.com/a/consumer/api/oidc/auth',
-      token_endpoint: 'https://silverlake.banno-production.com/a/consumer/api/oidc/token',
-      jwks_uri: 'https://silverlake.banno-production.com/a/consumer/api/oidc/certs'
+      authorization_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/auth',
+      token_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/token',
+      jwks_uri: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/certs'
     }
   },
   client: {
@@ -18,7 +18,7 @@ module.exports = {
     }
   },
   consumerApi: {
-    environment: 'https://silverlake.banno-production.com',
+    environment: 'https://2019silverlake.banno-production.com',
     usersBase: '/a/consumer/api/v0/users/'
   }
 }
