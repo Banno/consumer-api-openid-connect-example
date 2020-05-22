@@ -6,7 +6,7 @@ This repository includes an example that uses [Node.js](https://nodejs.org) with
 
 # Prerequisites from Banno
 
-Before you get started with the example code, you'll need to get some credentials from your `Implementation Coordinator` at Banno.
+Before you get started with the example code, you'll need to get some credentials from [Banno](mailto:developerdocsite@banno.com).
 
 You'll need these credentials:
 - `client_id`
