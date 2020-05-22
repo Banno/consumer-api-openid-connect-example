@@ -4,6 +4,8 @@ This project is an example of how to connect to [Banno](https://banno.com/) serv
 
 This repository includes an example that uses [Node.js](https://nodejs.org) with the [Passport](http://www.passportjs.org/) authentication middleware to handle the OpenID Connect protocol.
 
+This example is best used when following along with the [Authentication Quickstart on JackHenry.Dev](https://jackhenry.dev/open-api-docs/consumer-api/quickstarts/Authentication/).
+
 # Prerequisites from Banno
 
 Before you get started with the example code, you'll need to get some credentials from [Banno](mailto:developerdocsite@banno.com).
