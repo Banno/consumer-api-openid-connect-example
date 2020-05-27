@@ -88,13 +88,14 @@ Once you are signed in, you'll be redirected to https://localhost:8080/me and se
 }
 ```
 
-You'll also see a log statement in the terminal that shows the `access_token` and `id_token`:
+You'll also see a log statement in the terminal that shows the `access_token`,  `id_token`, and `refresh_token`:
 
 ```
 TokenSet {
   access_token: '<lengthy-json-web-token-string>',
   expires_at: 1571334444,
   id_token: '<lengthy-json-web-token-string>',
+  refresh_token: '<lengthy-json-web-token-string>'
   scope: 'openid address email phone profile banno',
   token_type: 'Bearer'
 }
@@ -103,6 +104,8 @@ TokenSet {
 The `access_token` contains _authorization information about your application_ regarding which actions it is allowed to perform via the Banno API. These actions map to the scopes (e.g. `openid address email phone profile banno`).
 
 The `id_token` contains _authentication information about the user_ (i.e. claims).
+
+The `refresh_token` is a credential that can be used to retrieve a new access token (e.g. for when the access token has expired or otherwise been invalidated).
 
 Both the `access_token` and `id_token` are in [JSON Web Token format](https://en.wikipedia.org/wiki/JSON_Web_Token) (see [RFC 7519](https://tools.ietf.org/html/rfc7519) for specification details).
 

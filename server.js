@@ -44,7 +44,8 @@ const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
-    scope: 'openid address email phone profile banno', // These are the OpenID Connect scopes that you'll need.
+    scope: 'openid address email phone profile offline_access banno', // These are the OpenID Connect scopes that you'll need.
+    prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
   },
 }, (tokenSet, done) => {
   console.log(tokenSet)
