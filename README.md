@@ -95,7 +95,7 @@ TokenSet {
   access_token: '<lengthy-json-web-token-string>',
   expires_at: 1571334444,
   id_token: '<lengthy-json-web-token-string>',
-  refresh_token: '<lengthy-json-web-token-string>'
+  refresh_token: '<lengthy-json-web-token-string>',
   scope: 'openid address email phone profile banno',
   token_type: 'Bearer'
 }
