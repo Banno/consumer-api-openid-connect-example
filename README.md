@@ -96,7 +96,7 @@ TokenSet {
   expires_at: 1571334444,
   id_token: '<lengthy-json-web-token-string>',
   refresh_token: '<lengthy-json-web-token-string>',
-  scope: 'openid address email phone profile banno',
+  scope: 'openid address email phone profile offline_access banno',
   token_type: 'Bearer'
 }
 ```
