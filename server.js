@@ -59,7 +59,16 @@ const app = express();
 app.use(session({
   secret: 'foo',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  // This example project can be used to build a plugin using the Plugin Framework.
+  // Note that this example project's particular cookie technique will only work in Chromium-based browsers e.g.
+  // - Google Chrome
+  // - newer versions of Microsoft Edge
+  // This cookie technique is NOT recommended for use in production systems.
+  cookie: {
+    sameSite: 'none',
+    secure: true
+  }
 }));
 
 app.use(passport.initialize());
@@ -95,7 +104,16 @@ app.get('/auth', (req, res, next) => {
 
 // This routing path handles the authentication callback.
 // This path (including the host information) must be configured in Banno SSO settings.
-app.get('/auth/cb', (req, res, next) =>
+app.get('/auth/cb', (req, res, next) => {
+  // This line is meant as a workaround for a specific issue that presents itself when attempting to use
+  // this example project to build a plugin for the Plugin Framework.
+  //
+  // This works around a quirk in how sessions are handled by this project's
+  // OpenID Connect client (https://github.com/panva/node-openid-client) dependency.
+  //
+  // This line is NOT recommended for use in production systems.
+  req.session[passportStrategy._key] = req.session[passportStrategy._key] || { 'key': 'DO_NOT_USE_IN_PRODUCTION'};
+
   passport.authenticate('openidconnect', (err, user, info) => {
     console.log(err, user, info);
     if (err || !user) {
@@ -122,7 +140,7 @@ app.get('/auth/cb', (req, res, next) =>
       return res.redirect(nextPath);
     });
   })(req, res, next)
-);
+});
 
 // This routing path shows the OpenID Connect claims for the authenticated user.
 // This path is where you'll be redirected once you sign in.
