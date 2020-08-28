@@ -66,7 +66,7 @@ app.use(session({
   // - newer versions of Microsoft Edge
   // This cookie technique is NOT recommended for use in production systems.
   cookie: {
-    sameSite: 'none',
+    sameSite: 'lax',
     secure: true
   }
 }));
@@ -177,8 +177,8 @@ app.use(express.static('public'));
 if (env === 'local') {
   // Running the server locally requires a cert due to HTTPS requirement for the authentication callback.
   const server = https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
+    key: fs.readFileSync('cert.key'),
+    cert: fs.readFileSync('cert.pem')
   }, app)
   server.listen(port, () => console.log(`Server listening on https://localhost:${port}...`))
 } else {
