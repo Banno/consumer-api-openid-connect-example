@@ -14,7 +14,7 @@
     "express-session": "^1.15.6",
     "openid-client": "^2.4.5",
     "passport": "^0.4.0",
-    "node-fetch": "2.6.0"
+    "node-fetch": "2.6.1"
   },
   "engines": {
     "node": ">=6"
