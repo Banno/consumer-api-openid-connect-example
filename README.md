@@ -6,9 +6,11 @@ This repository includes an example that uses [Node.js](https://nodejs.org) with
 
 This example is best used when following along with the [Authentication Quickstart on JackHenry.Dev](https://jackhenry.dev/open-api-docs/consumer-api/quickstarts/Authentication/).
 
-# Prerequisites from Banno
+# Prerequisites
 
-Before you get started with the example code, you'll need to get some credentials from [Banno](mailto:developerdocsite@banno.com).
+Before you get started, you'll need to get these from the back office administrator at your financial institution who has access to **Banno People**.
+
+_If the administrator does not know where to do this, they can review the [External application configuration](https://knowledge.banno.com/people/settings/external-application-configuration/) article on the Banno Knowledge site._
 
 You'll need these credentials:
 - `client_id`
