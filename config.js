@@ -1,16 +1,11 @@
 module.exports = {
   issuer: {
-    'silverlake-local': {
-      issuer: 'https://www.banno.com/a/consumer/api/oidc',
-      authorization_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/auth',
-      token_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/token',
-      jwks_uri: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/certs'
-    }
+    'silverlake-local': 'https://2019silverlake.banno-uat.com/a/consumer/api/v0/oidc/.well-known/openid-configuration'
   },
   client: {
     'silverlake-local': {
-      client_id: '55fc6a69-a4dd-404c-97f9-e2361b4c44b1', // These credentials are designed for *demonstration* purposes only.
-      client_secret: 'da9003cc-438a-4bbe-95d0-9af6ffe36d6a', // These credentials are designed for *demonstration* purposes only.
+      client_id: 'ada34b1f-2aee-43c6-9448-4d85ec59662d', // These credentials are designed for *demonstration* purposes only.
+      client_secret: 'fd6674b3-0460-4ed2-a029-8035c5366bb6', // These credentials are designed for *demonstration* purposes only.
       grant_types: ['authorization_code'],
       response_types: ['code'],
       token_endpoint_auth_method: 'client_secret_basic',
@@ -18,7 +13,7 @@ module.exports = {
     }
   },
   consumerApi: {
-    environment: 'https://2019silverlake.banno-production.com',
+    environment: 'https://2019silverlake.banno-uat.com',
     usersBase: '/a/consumer/api/v0/users/'
   }
 }
