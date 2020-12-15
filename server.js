@@ -41,6 +41,12 @@ client[custom.clock_tolerance] = 300; // to allow a 5 minute clock skew for veri
 let accessToken;
 
 const claims = {
+  given_name: null,
+  family_name: null,
+  name: null,
+  address: null,
+  phone: null,
+  email: null,
   'https://api.banno.com/consumer/claim/institution_id': null
 };
 
@@ -49,7 +55,7 @@ const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
-    scope: 'openid email profile address', // These are the OpenID Connect scopes that you'll need.
+    scope: 'openid', // These are the OpenID Connect scopes that you'll need.
     // prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
     claims: JSON.stringify({
       id_token: claims,
