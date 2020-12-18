@@ -55,8 +55,8 @@ const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
-    scope: 'openid', // These are the OpenID Connect scopes that you'll need.
-    // prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
+    scope: 'openid offline_access', // These are the OpenID Connect scopes that you'll need.
+    prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
     claims: JSON.stringify({
       id_token: claims,
       userinfo: claims
