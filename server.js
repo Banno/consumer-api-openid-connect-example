@@ -29,8 +29,8 @@ const env = process.env.ENVIRONMENT
 console.log(`Environment: ${env}`)
 
 // Configure the OpenID Connect client based on the issuer.
-const issuer = new Issuer(config.issuer[`silverlake-${env}`]);
-const client = new issuer.Client(config.client[`silverlake-${env}`]);
+const issuer = new Issuer(config.issuer[`garden-${env}`]);
+const client = new issuer.Client(config.client[`garden-${env}`]);
 
 client[custom.clock_tolerance] = 300; // to allow a 5 minute clock skew for verification
 
@@ -43,7 +43,7 @@ let accessToken;
 const passportStrategy = new Strategy({
   client: client,
   params: {
-    redirect_uri: config.client[`silverlake-${env}`].redirect_uris[0],
+    redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
     scope: 'openid address email phone profile offline_access banno', // These are the OpenID Connect scopes that you'll need.
     prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
   }

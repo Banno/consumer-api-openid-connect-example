@@ -79,7 +79,7 @@ Once you are signed in, you'll be redirected to https://localhost:8080/me and se
   "given_name": "Riley",
   "locale": "en-US",
   "name": "Riley Doe",
-  "picture": "https://silverlake.banno-production.com/a/consumer/api/node/public-profile-photo/bUlKMGFpcUZmaXdMUG5vNWJJanFkT1hVMmhwVTdmF1bHQ6djE6RFpGhqVUp3YW1mWUIzZ2lYUDljQ0bmdjbGc9PQFyeHppTmIvTTBNK0ZFVXlNRnNVT0VXTW1CRDVKbEx0==",
+  "picture": "https://digital.garden-fi.com/a/consumer/api/node/public-profile-photo/dmF1bHQ6djE6bEhvR3NUa2dJNzUzOTFYNjd2cnRvRGE0ZUhIRm5MWGM0WGxybllIeDZHVEhpcVZ4KysxWmhVeC8vQWlFLzZZQTdKMjNhUURjUFNZRE5ONWpDczZEK3c9PQ==",
   "preferred_username": "rileydoe",
   "at_hash": "meToBgo7UfatG825BaaClQ",
   "sid": "e10597ce-4b85-4a78-890b-55e2af751c9a",
