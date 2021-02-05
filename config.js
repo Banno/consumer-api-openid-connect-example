@@ -1,16 +1,16 @@
 module.exports = {
   issuer: {
-    'silverlake-local': {
+    'garden-local': {
       issuer: 'https://www.banno.com/a/consumer/api/oidc',
-      authorization_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/auth',
-      token_endpoint: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/token',
-      jwks_uri: 'https://2019silverlake.banno-production.com/a/consumer/api/oidc/certs'
+      authorization_endpoint: 'https://digital.garden-fi.com/a/consumer/api/oidc/auth',
+      token_endpoint: 'https://digital.garden-fi.com/a/consumer/api/oidc/token',
+      jwks_uri: 'https://digital.garden-fi.com/a/consumer/api/oidc/certs'
     }
   },
   client: {
-    'silverlake-local': {
-      client_id: '55fc6a69-a4dd-404c-97f9-e2361b4c44b1', // These credentials are designed for *demonstration* purposes only.
-      client_secret: 'da9003cc-438a-4bbe-95d0-9af6ffe36d6a', // These credentials are designed for *demonstration* purposes only.
+    'garden-local': {
+      client_id: '3f85ce95-00e7-4f3e-abbe-132d95f96d4e', // These credentials are designed for *demonstration* purposes only.
+      client_secret: 'ab85fae7-64df-43e8-bb02-474f2eaae613', // These credentials are designed for *demonstration* purposes only.
       grant_types: ['authorization_code'],
       response_types: ['code'],
       token_endpoint_auth_method: 'client_secret_basic',
@@ -18,7 +18,7 @@ module.exports = {
     }
   },
   consumerApi: {
-    environment: 'https://2019silverlake.banno-production.com',
+    environment: 'https://digital.garden-fi.com',
     usersBase: '/a/consumer/api/v0/users/'
   }
 }

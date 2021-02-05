@@ -65,28 +65,28 @@ Once you are signed in, you'll be redirected to https://localhost:8080/me and se
 
 ```
 {
-  "sub": "5cad5c30-6d24-11e9-870c-0242b78f8571",
-  "address": {
-    "locality": "Seattle",
-    "postal_code": "981090000",
-    "region": "WA",
-    "street_address": "400 Broad St"
+  sub: '264c8bbe-8509-4ab7-a0ed-33d89c18a8b6',
+  address: {
+    locality: 'This Place Here',
+    postal_code: '660070000',
+    region: 'KS',
+    street_address: '1234 Any Where'
   },
-  "email": "rileydoe@jackhenry.dev",
-  "phone_number": "+15552368",
-  "birthdate": "1951-03-02",
-  "family_name": "Doe",
-  "given_name": "Riley",
-  "locale": "en-US",
-  "name": "Riley Doe",
-  "picture": "https://silverlake.banno-production.com/a/consumer/api/node/public-profile-photo/bUlKMGFpcUZmaXdMUG5vNWJJanFkT1hVMmhwVTdmF1bHQ6djE6RFpGhqVUp3YW1mWUIzZ2lYUDljQ0bmdjbGc9PQFyeHppTmIvTTBNK0ZFVXlNRnNVT0VXTW1CRDVKbEx0==",
-  "preferred_username": "rileydoe",
-  "at_hash": "meToBgo7UfatG825BaaClQ",
-  "sid": "e10597ce-4b85-4a78-890b-55e2af751c9a",
-  "aud": "05166b79-4f61-484d-a4b4-2a225926bf4b",
-  "exp": 1571253248,
-  "iat": 1571249648,
-  "iss": "https://www.banno.com/a/consumer/api/oidc"
+  email: 'some.email@domain.com',
+  phone_number: '+2022020',
+  birthdate: '2020-12-08',
+  family_name: 'Doe',
+  given_name: 'Riley',
+  middle_name: null,
+  name: 'Riley Doe',
+  picture: 'https://digital.garden-fi.com/a/consumer/api/node/public-profile-photo/dmF1bHQ6djE6bEhvR3NUa2dJNzUzOTFYNjd2cnRvRGE0ZUhIRm5MWGM0WGxybllIeDZHVEhpcVZ4KysxWmhVeC8vQWlFLzZZQTdKMjNhUURjUFNZRE5ONWpDczZEK3c9PQ==',
+  preferred_username: 'rileyc',
+  at_hash: 'Z_eQL1B_CGIELiQcGuRGfw',
+  sid: '53c51c57-92c8-4f35-82bd-8916a3963e15',
+  aud: '3f85ce95-00e7-4f3e-abbe-132d95f96d4e',
+  exp: 1612541977,
+  iat: 1612538377,
+  iss: 'https://www.banno.com/a/consumer/api/oidc'
 }
 ```
 
