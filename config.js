@@ -1,8 +1,6 @@
 module.exports = {
   issuer: {
-    'garden-local': {
-      issuer: 'https://digital.garden-fi.com/a/consumer/api/v0/oidc'
-    }
+    'garden-local': 'https://digital.garden-fi.com/a/consumer/api/v0/oidc'
   },
   client: {
     'garden-local': {
