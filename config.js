@@ -1,19 +1,21 @@
 module.exports = {
   issuer: {
-    'silverlake-local': 'https://2019silverlake.banno-uat.com/a/consumer/api/v0/oidc/.well-known/openid-configuration'
+    'garden-local': {
+      issuer: 'https://digital.garden-fi.com/a/consumer/api/v0/oidc'
+    }
   },
   client: {
-    'silverlake-local': {
-      client_id: 'ada34b1f-2aee-43c6-9448-4d85ec59662d', // These credentials are designed for *demonstration* purposes only.
-      client_secret: 'fd6674b3-0460-4ed2-a029-8035c5366bb6', // These credentials are designed for *demonstration* purposes only.
+    'garden-local': {
+      client_id: '3f85ce95-00e7-4f3e-abbe-132d95f96d4e', // These credentials are designed for *demonstration* purposes only.
+      client_secret: 'ab85fae7-64df-43e8-bb02-474f2eaae613', // These credentials are designed for *demonstration* purposes only.
       grant_types: ['authorization_code'],
       response_types: ['code'],
-      token_endpoint_auth_method: 'client_secret_basic',
+      token_endpoint_auth_method: 'client_secret_post',
       redirect_uris: ['https://localhost:8080/auth/cb']
     }
   },
   consumerApi: {
-    environment: 'https://2019silverlake.banno-uat.com',
+    environment: 'https://digital.garden-fi.com',
     usersBase: '/a/consumer/api/v0/users/'
   }
 }

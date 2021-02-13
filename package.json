@@ -12,9 +12,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "node-fetch": "2.6.1",
     "openid-client": "^3.0.0",
-    "passport": "^0.4.0",
-    "node-fetch": "2.6.1"
+    "passport": "^0.4.0"
   },
   "engines": {
     "node": ">=12.0"
