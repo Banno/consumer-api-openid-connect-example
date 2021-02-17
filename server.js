@@ -16,20 +16,21 @@
 
 'use strict';
 
-const fs = require('fs')
-const https = require('https')
-const fetch = require('node-fetch')
-const { Strategy, Issuer, custom } = require('openid-client')
-const passport = require('passport')
-const express = require('express')
-const session = require('express-session')
-const config = require('./config')
+const fs = require('fs');
+const https = require('https');
+const fetch = require('node-fetch');
+const { Strategy, Issuer, custom } = require('openid-client');
+const passport = require('passport');
+const express = require('express');
+const session = require('express-session');
+const config = require('./config');
 
-const env = process.env.ENVIRONMENT
-console.log(`Environment: ${env}`)
+const env = process.env.ENVIRONMENT;
+console.log(`Environment: ${env}`);
 
+(async () => {
 // Configure the OpenID Connect client based on the issuer.
-const issuer = new Issuer(config.issuer[`garden-${env}`]);
+const issuer = await Issuer.discover(config.issuer[`garden-${env}`]);
 const client = new issuer.Client(config.client[`garden-${env}`]);
 
 client[custom.clock_tolerance] = 300; // to allow a 5 minute clock skew for verification
@@ -39,14 +40,28 @@ client[custom.clock_tolerance] = 300; // to allow a 5 minute clock skew for veri
 // This method is NOT recommended for use in production systems.
 let accessToken;
 
+const claims = {
+  given_name: null,
+  family_name: null,
+  name: null,
+  address: null,
+  phone: null,
+  email: null,
+  'https://api.banno.com/consumer/claim/institution_id': null
+};
+
 // Configure the Passport strategy for OpenID Connect.
 const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
-    scope: 'openid address email phone profile offline_access banno', // These are the OpenID Connect scopes that you'll need.
-    prompt: 'consent', // This prompt value in tandem with the 'offline_access' scope will request a 'refresh_token' from the authentication server.
-  }
+    scope: 'openid https://api.banno.com/consumer/auth/offline_access', // These are the OpenID Connect scopes that you'll need.
+    claims: JSON.stringify({
+      id_token: claims,
+      userinfo: claims
+    })
+  },
+  usePKCE: true
 }, (tokenSet, done) => {
   console.log(tokenSet);
   accessToken = tokenSet.access_token;
@@ -305,3 +320,4 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
+})();

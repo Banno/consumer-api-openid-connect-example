@@ -1,11 +1,6 @@
 module.exports = {
   issuer: {
-    'garden-local': {
-      issuer: 'https://www.banno.com/a/consumer/api/oidc',
-      authorization_endpoint: 'https://digital.garden-fi.com/a/consumer/api/oidc/auth',
-      token_endpoint: 'https://digital.garden-fi.com/a/consumer/api/oidc/token',
-      jwks_uri: 'https://digital.garden-fi.com/a/consumer/api/oidc/certs'
-    }
+    'garden-local': 'https://digital.garden-fi.com/a/consumer/api/v0/oidc'
   },
   client: {
     'garden-local': {
@@ -13,7 +8,7 @@ module.exports = {
       client_secret: 'ab85fae7-64df-43e8-bb02-474f2eaae613', // These credentials are designed for *demonstration* purposes only.
       grant_types: ['authorization_code'],
       response_types: ['code'],
-      token_endpoint_auth_method: 'client_secret_basic',
+      token_endpoint_auth_method: 'client_secret_post',
       redirect_uris: ['https://localhost:8080/auth/cb']
     }
   },
