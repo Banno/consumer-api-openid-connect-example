@@ -27,6 +27,7 @@ const config = require('./config');
 
 const env = process.env.ENVIRONMENT;
 console.log(`Environment: ${env}`);
+console.log('API_ENVIRONMENT: ' + config.consumerApi.environment);
 
 (async () => {
 // Configure the OpenID Connect client based on the issuer.
@@ -57,6 +58,12 @@ const passportStrategy = new Strategy({
     redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
     scope: 'openid https://api.banno.com/consumer/auth/offline_access', // These are the OpenID Connect scopes that you'll need.
     claims: JSON.stringify({
+      // Authenticated information about the user can be returned in these ways:
+      // - as Claims in the Identity Token,
+      // - as Claims returned from the UserInfo Endpoint,
+      // - as Claims in both the Identity Token and from the UserInfo Endpoint.
+      //
+      // See https://openid.net/specs/openid-connect-core-1_0.html#ClaimsParameter
       id_token: claims,
       userinfo: claims
     })
@@ -200,9 +207,9 @@ if (env === 'local') {
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
   }, app)
-  server.listen(port, () => console.log(`Server listening on https://localhost:${port}...`))
+  server.listen(port, () => console.log(`Server listening on https://localhost:${port}`))
 } else {
-  app.listen(port, () => console.log(`Server listening on http://localhost:${port}...`))
+  app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
 }
 
 async function getAccountsAndTransactions(userId, res) {
