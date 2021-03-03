@@ -27,6 +27,7 @@ const config = require('./config');
 
 const env = process.env.ENVIRONMENT;
 console.log(`Environment: ${env}`);
+console.log('API_ENVIRONMENT: ' + config.consumerApi.environment);
 
 (async () => {
 // Configure the OpenID Connect client based on the issuer.
