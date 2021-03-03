@@ -207,9 +207,9 @@ if (env === 'local') {
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
   }, app)
-  server.listen(port, () => console.log(`Server listening on https://localhost:${port}...`))
+  server.listen(port, () => console.log(`Server listening on https://localhost:${port}`))
 } else {
-  app.listen(port, () => console.log(`Server listening on http://localhost:${port}...`))
+  app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
 }
 
 async function getAccountsAndTransactions(userId, res) {
