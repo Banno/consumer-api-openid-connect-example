@@ -60,7 +60,7 @@ const passportStrategy = new Strategy({
     claims: JSON.stringify({
       // Authenticated information about the user can be returned in these ways:
       // - as Claims in the Identity Token,
-      // - as Claims returned from the UserInfo endpoint,
+      // - as Claims returned from the UserInfo Endpoint,
       // - as Claims in both the Identity Token and from the UserInfo Endpoint.
       //
       // See https://openid.net/specs/openid-connect-core-1_0.html#ClaimsParameter
