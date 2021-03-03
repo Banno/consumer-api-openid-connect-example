@@ -57,6 +57,12 @@ const passportStrategy = new Strategy({
     redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
     scope: 'openid https://api.banno.com/consumer/auth/offline_access', // These are the OpenID Connect scopes that you'll need.
     claims: JSON.stringify({
+      // Authenticated information about the user can be returned in these ways:
+      // - as Claims in the Identity Token,
+      // - as Claims returned from the UserInfo endpoint,
+      // - as Claims in both the Identity Token and from the UserInfo Endpoint.
+      //
+      // See https://openid.net/specs/openid-connect-core-1_0.html#ClaimsParameter
       id_token: claims,
       userinfo: claims
     })
