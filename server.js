@@ -230,10 +230,16 @@ async function getAccountsAndTransactions(userId, res) {
   for (const account of accounts) {
     const accountId = account.id;
     const accountBalance = account.balance;
+    const accountType = account.accountType;
+    const accountSubtype = account.accountSubType;
+    const accountRoutingNumber = account.routingNumber;
 
     output += `
     Account ID: ${accountId}
       Balance: ${accountBalance}
+      Type: ${accountType}
+      Subtype: ${accountSubtype}
+      Routing Number: ${accountRoutingNumber}
     `;
 
     // GET Transactions
