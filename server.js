@@ -56,7 +56,16 @@ const passportStrategy = new Strategy({
   client: client,
   params: {
     redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
-    scope: 'openid https://api.banno.com/consumer/auth/offline_access', // These are the OpenID Connect scopes that you'll need.
+    // These are the OpenID Connect scopes that you'll need to:
+    // - receive a Refresh Token
+    // - get read-only access to Accounts data
+    // - get read-only access to Transactions data
+    //
+    // For general information on scopes and claims, see https://jackhenry.dev/open-api-docs/authentication-framework/overview/openidconnectoauth/.
+    //
+    // For specific information on scopes for API endpoints, see the definitions in https://jackhenry.dev/open-api-docs/consumer-api/api-reference/.
+    // Every API endpoint documented in our API Reference includes information on the scope necessary to use that endpoint.
+    scope: 'openid https://api.banno.com/consumer/auth/offline_access https://api.banno.com/consumer/auth/accounts.readonly https://api.banno.com/consumer/auth/transactions.detail.readonly',
     claims: JSON.stringify({
       // Authenticated information about the user can be returned in these ways:
       // - as Claims in the Identity Token,
@@ -245,19 +254,25 @@ async function getAccountsAndTransactions(userId, res) {
     // GET Transactions
     const transactions = await getTransactions(consumerApiPath, userId, accountId, accessToken);
 
-    transactions.forEach(transaction => {
-      const transactionId = transaction.id;
-      const transactionAccountId = transaction.accountId;
-      const transactionAmount = transaction.amount;
-      const transactionMemo = transaction.memo;
-
+    if (transactions != null){
+      transactions.forEach(transaction => {
+        const transactionId = transaction.id;
+        const transactionAccountId = transaction.accountId;
+        const transactionAmount = transaction.amount;
+        const transactionMemo = transaction.memo;
+  
+        output += `
+        Transaction ID: ${transactionId}
+          Account ID: ${transactionAccountId}
+          Amount: ${transactionAmount}
+          Memo: ${transactionMemo}
+        `;
+      });
+    } else {
       output += `
-      Transaction ID: ${transactionId}
-        Account ID: ${transactionAccountId}
-        Amount: ${transactionAmount}
-        Memo: ${transactionMemo}
-      `;
-    });
+        No transactions for this account.
+      `
+    }
   }
 
   res.set('Content-Type', 'text/plain').send(output);
