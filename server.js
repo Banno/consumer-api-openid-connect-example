@@ -245,19 +245,25 @@ async function getAccountsAndTransactions(userId, res) {
     // GET Transactions
     const transactions = await getTransactions(consumerApiPath, userId, accountId, accessToken);
 
-    transactions.forEach(transaction => {
-      const transactionId = transaction.id;
-      const transactionAccountId = transaction.accountId;
-      const transactionAmount = transaction.amount;
-      const transactionMemo = transaction.memo;
-
+    if (transactions != null){
+      transactions.forEach(transaction => {
+        const transactionId = transaction.id;
+        const transactionAccountId = transaction.accountId;
+        const transactionAmount = transaction.amount;
+        const transactionMemo = transaction.memo;
+  
+        output += `
+        Transaction ID: ${transactionId}
+          Account ID: ${transactionAccountId}
+          Amount: ${transactionAmount}
+          Memo: ${transactionMemo}
+        `;
+      });
+    } else {
       output += `
-      Transaction ID: ${transactionId}
-        Account ID: ${transactionAccountId}
-        Amount: ${transactionAmount}
-        Memo: ${transactionMemo}
-      `;
-    });
+        No transactions for this account.
+      `
+    }
   }
 
   res.set('Content-Type', 'text/plain').send(output);
