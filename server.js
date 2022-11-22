@@ -155,7 +155,10 @@ app.get('/auth/cb', (req, res, next) => {
     if (err || !user) {
       return res.redirect('/login.html');
     }
-    req.logIn(user, (err) => {
+    const options = {
+      keepSessionInfo: true
+    }
+    req.logIn(user, options, (err) => {
       if (err) {
         return next(err);
       }
