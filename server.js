@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+// Note:
+// If you're learning how to build a *plugin*, you should use this other example project - 
+// https://github.com/Banno/simple-plugin-example
+
 'use strict';
 
 const fs = require('fs');

@@ -6,6 +6,10 @@ This repository includes an example that uses [Node.js](https://nodejs.org) with
 
 This example is best used when following along with the [Authentication Quickstart on JackHenry.Dev](https://jackhenry.dev/open-api-docs/consumer-api/quickstarts/Authentication/).
 
+## Note:
+
+If you're learning how to build a *plugin*, you should use this other example project - https://github.com/Banno/simple-plugin-example
+
 # Prerequisites
 
 Before you get started, you'll need to get these from the back office administrator at your financial institution who has access to **Banno People**.
