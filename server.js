@@ -91,20 +91,6 @@ app.use(session({
   secret: 'foo',
   resave: false,
   saveUninitialized: true,
-  // This example project can be used to build a plugin using the Plugin Framework.
-  // Note that this example project's particular cookie technique will only work in Chromium-based browsers e.g.
-  // - Google Chrome
-  // - newer versions of Microsoft Edge
-  //
-  // Note that these cookies are going to be blocked by Chromium-based browsers in the future, and are already
-  // blocked by Safari and Firefox by default.
-  //
-  // Safari can be made to work by disabling the "Prevent cross-site tracking" option. This will work for the developer,
-  // but isn't a solution for production usage.
-  cookie: {
-    sameSite: 'none',
-    secure: true
-  }
 }));
 
 app.use(passport.initialize());
@@ -141,15 +127,6 @@ app.get('/auth', (req, res, next) => {
 // This routing path handles the authentication callback.
 // This path (including the host information) must be configured in Banno SSO settings.
 app.get('/auth/cb', (req, res, next) => {
-  // This is an undocumented workaround for a quirk in how sessions are handled by this project's
-  // specific OpenID Connect client (https://github.com/panva/node-openid-client) dependency.
-  //
-  // The issue presents itself when using this example project to build a plugin for the Plugin Framework.
-  //
-  // Developers must ensure that protections are put in place to ensure that requests arriving
-  // without an existing session and state are not vulnerable to cross-site request forgeries.
-  req.session[passportStrategy._key] = req.session[passportStrategy._key] || { 'key': 'DO_NOT_USE_IN_PRODUCTION'};
-
   passport.authenticate('openidconnect', (err, user, info) => {
     console.log(err, user, info);
     if (err || !user) {
