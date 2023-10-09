@@ -21,7 +21,6 @@
 'use strict';
 
 const fs = require('fs');
-const https = require('https');
 const fetch = require('node-fetch');
 const { Strategy, Issuer, custom } = require('openid-client');
 const passport = require('passport');
@@ -29,14 +28,13 @@ const express = require('express');
 const session = require('express-session');
 const config = require('./config');
 
-const env = process.env.ENVIRONMENT;
-console.log(`Environment: ${env}`);
+console.log('Note: This is a local development server, it is meant as a demonstration of how to use the Banno OpenID Connect API. It is not meant to be used in production.');
 console.log('API_ENVIRONMENT: ' + config.consumerApi.environment);
 
 (async () => {
 // Configure the OpenID Connect client based on the issuer.
-const issuer = await Issuer.discover(config.issuer[`garden-${env}`]);
-const client = new issuer.Client(config.client[`garden-${env}`]);
+const issuer = await Issuer.discover(config.issuer['garden']);
+const client = new issuer.Client(config.client['garden']);
 
 client[custom.clock_tolerance] = 300; // to allow a 5 minute clock skew for verification
 
@@ -59,7 +57,7 @@ const claims = {
 const passportStrategy = new Strategy({
   client: client,
   params: {
-    redirect_uri: config.client[`garden-${env}`].redirect_uris[0],
+    redirect_uri: config.client['garden'].redirect_uris[0],
     // These are the OpenID Connect scopes that you'll need to:
     // - receive a Refresh Token
     // - get read-only access to Accounts data
@@ -194,16 +192,7 @@ app.get('/accountsAndTransactions', (req, res) => {
 
 app.use(express.static('public'));
 
-if (env === 'local') {
-  // Running the server locally requires a cert due to HTTPS requirement for the authentication callback.
-  const server = https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-  }, app)
-  server.listen(port, () => console.log(`Server listening on https://localhost:${port}`))
-} else {
-  app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
-}
+app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
 
 async function getAccountsAndTransactions(userId, res) {
   // Set up

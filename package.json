@@ -5,7 +5,7 @@
   "description": "Example of how to connect to Banno services using OpenID Connect (an identity layer on top of OAuth 2.0)",
   "main": "server.js",
   "scripts": {
-    "start": "ENVIRONMENT='local' node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "Apache-2.0",
