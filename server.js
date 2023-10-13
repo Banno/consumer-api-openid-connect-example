@@ -192,6 +192,8 @@ app.get('/accountsAndTransactions', (req, res) => {
 
 app.use(express.static('public'));
 
+// Previous versions of this demo used provided certs to run a secure server,
+// this is no longer neccesary for localhost
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
 
 async function getAccountsAndTransactions(userId, res) {
