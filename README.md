@@ -58,14 +58,14 @@ The server will now be running locally. You'll see this log statement in the ter
 
 ```
 Environment: local
-Server listening on https://localhost:8080...
+Server listening on http://localhost:8080...
 ```
 
-Next, go to https://localhost:8080/login.html in a web browser.
+Next, go to http://localhost:8080/login.html in a web browser.
 
 Click on `Sign in with Banno` and sign in with your Banno Username and Password.
 
-Once you are signed in, you'll be redirected to https://localhost:8080/me and see the [OpenID Connect claims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims) for the user. It'll look similar to the following example:
+Once you are signed in, you'll be redirected to http://localhost:8080/me and see the [OpenID Connect claims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims) for the user. It'll look similar to the following example:
 
 ```
 {
@@ -127,12 +127,12 @@ This project has an example of how to handle deeplinking to a specific page wher
 
 The example of how to handle deeplinking is shown in the `'/hello'` route within `server.js`.
 
-If a user visits https://localhost:8080/hello and _is already authenticated_, then they will be shown a page which displays their name (e.g. Riley Doe).
+If a user visits http://localhost:8080/hello and _is already authenticated_, then they will be shown a page which displays their name (e.g. Riley Doe).
 ```
 Hello Riley Doe
 ```
 
-If a user visits https://localhost:8080/hello but _is not yet authenticated_, then they will be redirected to login at https://localhost:8080/login.html?returnPath=/hello.
+If a user visits http://localhost:8080/hello but _is not yet authenticated_, then they will be redirected to login at http://localhost:8080/login.html?returnPath=/hello.
 
 A `state` is calculated and associated with the `returnPath` (in this case, `/hello`).
 
@@ -142,7 +142,7 @@ Once the user is authenticated, the `state` parameter is compared to the local `
 
 An example of how to retrieve Accounts and Transactions for a user is shown in the `'/accountsAndTransactions'` route within `server.js`.
 
-If a user visits https://localhost:8080/accountsAndTransactions and authenticates, the server will retrieve the Accounts and Transactions for the user and 'pretty print' the data to the page.
+If a user visits http://localhost:8080/accountsAndTransactions and authenticates, the server will retrieve the Accounts and Transactions for the user and 'pretty print' the data to the page.
 
 ## Retrieval Process
 
