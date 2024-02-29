@@ -12,13 +12,21 @@ If you're learning how to build a *plugin*, you should use this other example pr
 
 # Prerequisites
 
-Before you get started, you'll need to get these from the back office administrator at your financial institution who has access to **Banno People**.
-
-_If the administrator does not know where to do this, they can review the [External application configuration](https://knowledge.banno.com/people/settings/external-application-configuration/) article on the Banno Knowledge site._
-
-You'll need these credentials:
+Before you get started, you'll need these credentials:
 - `client_id`
 - `client_secret`
+
+You have a few different options for getting those credentials.
+
+## 1) Signing up for a developer account on JackHenry.Dev
+
+Instructions on how to sign up for a developer account on JackHenry.Dev are at https://jackhenry.dev/open-api-docs/accessing-the-digital-toolkit/.
+
+## 2) Getting the credentials from a financial institution
+
+You'll have to get the credentials from the back office administrator at your financial institution who has access to **Banno People**.
+
+_If the administrator does not know where to do this, they can review the [External application configuration](https://knowledge.banno.com/people/settings/external-application-configuration/) article on the Banno Knowledge site._
 
 ## CAUTION
 
