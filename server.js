@@ -103,6 +103,8 @@ passport.use('openidconnect', passportStrategy);
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
+// If you click on the URL in the log, "Server listening on http://localhost:8080", that will open the URL in your web browser.
+// In this case, we'll redirect you from the '/' route to the '/hello' route.
 app.get('/', (req, res, next) => {
   res.redirect('/hello');
 });
@@ -170,6 +172,7 @@ app.get('/me', (req, res) => {
   res.set('Content-Type', 'application/json').send(JSON.stringify(req.session.passport.user, undefined, 2));
 });
 
+// This routing path shows a text string with "Hello (user.name)".
 app.get('/hello', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/login.html?returnPath=/hello');
