@@ -50,6 +50,10 @@ const claims = {
   address: null,
   phone: null,
   email: null,
+  // If you uncomment this line for the 'Unique Customer Identifer' Restricted claim,
+  // the administrator at the financial institution would also need to enable that restricted claim
+  // for the External Application used by this example in order to actually receive data for that claim.
+  //'https://api.banno.com/consumer/claim/customer_identifier': null,
   'https://api.banno.com/consumer/claim/institution_id': null
 };
 
@@ -103,6 +107,8 @@ passport.use('openidconnect', passportStrategy);
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
+// If you click on the URL in the log, "Server listening on http://localhost:8080", that will open the URL in your web browser.
+// In this case, we'll redirect you from the '/' route to the '/hello' route.
 app.get('/', (req, res, next) => {
   res.redirect('/hello');
 });
@@ -170,6 +176,7 @@ app.get('/me', (req, res) => {
   res.set('Content-Type', 'application/json').send(JSON.stringify(req.session.passport.user, undefined, 2));
 });
 
+// This routing path shows a text string with "Hello (user.name)".
 app.get('/hello', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/login.html?returnPath=/hello');
