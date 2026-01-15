@@ -9,6 +9,7 @@ module.exports = {
       grant_types: ['authorization_code'],
       response_types: ['code'],
       token_endpoint_auth_method: 'client_secret_post',
+      id_token_signed_response_alg: 'ES256',
       redirect_uris: ['http://localhost:8080/auth/cb']
     }
   },
